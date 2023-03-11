@@ -73,15 +73,17 @@ int binary_tree_is_bst(const binary_tree_t *tree)
 	int left_bst, right_bst;
 	int left_max, right_min;
 
+	if (!tree)
+		return (0);
 	left_max = binary_tree_max(tree->left);
 	right_min = binary_tree_min(tree->right);
-	if (!tree
-			|| (tree->left && left_max > tree->n)
+	if ((tree->left && left_max > tree->n)
 			|| (tree->right && right_min < tree->n))
 		return (0);
 	if ((binary_tree_is_leaf(tree->left) && binary_tree_is_leaf(tree->right))
 			|| (binary_tree_is_leaf(tree->left) && !tree->right)
-			|| (!tree->left && binary_tree_is_leaf(tree->right)))
+			|| (!tree->left && binary_tree_is_leaf(tree->right))
+			|| (!tree->left && !tree->right))
 		return (1);
 	left_bst = binary_tree_is_bst(tree->left);
 	right_bst = binary_tree_is_bst(tree->right);
